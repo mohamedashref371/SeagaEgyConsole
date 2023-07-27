@@ -7,7 +7,7 @@ public class SEAGA /* version 2023.07.26 */ {
 
     private static int temp;
 
-    private static String[] playersName = {"Player1", "Player2"};
+    private static final String[] playersName = {"Player1", "Player2"};
     public static boolean SetPlayer1Name(String s){
         if (!s.trim().equals("")) {playersName[0] = s; return true;}
         return false;
@@ -66,7 +66,7 @@ public class SEAGA /* version 2023.07.26 */ {
     }
 
     //region - undo & redo
-    private static StringBuilder undo = new StringBuilder(), redo = new StringBuilder();
+    private static final StringBuilder undo = new StringBuilder(), redo = new StringBuilder();
 
     public static boolean undo(){
         int l = undo.length();
@@ -166,7 +166,7 @@ public class SEAGA /* version 2023.07.26 */ {
 
     public static boolean input(String s) {
         s=s.trim();
-        int x=0, y=0;
+        int x, y;
         try{x = Integer.parseInt(s.substring(0,1));} catch (Exception ex) { return false;}
         try{y = Integer.parseInt(s.substring(s.length()-1));} catch (Exception ex) { return false;}
         if (x==4 || x==5 || x==6) { select(y); return select(x);}
