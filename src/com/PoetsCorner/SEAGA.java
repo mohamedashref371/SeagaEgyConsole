@@ -3,7 +3,10 @@ package com.PoetsCorner;
 import java.util.Random;
 import static com.PoetsCorner.SEAGA.PlaysFirst.*;
 
-public class SEAGA /* version 2023.07.26 */ {
+public class SEAGA {
+
+    private static String version = "2023.07.28";
+    public static String GetVersion() {return version;}
 
     private static int temp;
 

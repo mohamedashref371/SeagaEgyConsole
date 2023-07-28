@@ -6,7 +6,7 @@ import static com.PoetsCorner.SEAGA.*;
 public class Main {
     public static void main(String[] args) {
         Scanner x = new Scanner(System.in);
-        System.out.println("Hello, SEAGA EGY Console\n"
+        System.out.println("Hello, SEAGA EGY Console v1.0\n"
                 +"1, 2 and 3 for first player\n"
                 +"4, 5 and 6 for spaces\n"
                 +"7, 8 and 9 for second player.\n"
