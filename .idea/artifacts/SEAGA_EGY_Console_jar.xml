@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="SEAGA EGY Console:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/SEAGA_EGY_Console_jar</output-path>
+    <root id="archive" name="SEAGA EGY Console.jar">
+      <element id="module-output" name="SEAGA EGY Console" />
+    </root>
+  </artifact>
+</component>
