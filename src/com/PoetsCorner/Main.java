@@ -53,11 +53,13 @@ public class Main {
                 c = nextLine();
                 if (c.equals("u")) undo();
                 else if (c.equals("uu")) {undo(); undo();}
+                else if (c.equals("color")) color = !color;
                 else if (playerRole()==1 && s!=null){
                     resumeComputer(); pauseComputer();
                     System.out.println(computerStep);
                 } else if (!input(c)) System.out.println("Wrong entry!");
                 if (getWhoWin()!=2){
+                    System.out.print(Board());
                     System.out.println("The winner is " + GetPlayerName(getWhoWin()));
                     if (getWhoWin()==1 && s!=null){
                         System.out.println("Do you think you made a stupid wrong move ?! 🤔\nWrite 'uu' if you want to undo your move\nor any character to end the game.");

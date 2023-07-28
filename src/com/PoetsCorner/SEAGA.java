@@ -5,8 +5,7 @@ import static com.PoetsCorner.SEAGA.PlaysFirst.*;
 
 public class SEAGA {
 
-    private static String version = "2023.07.28";
-    public static String GetVersion() {return version;}
+    public static final String version = "2023.07.28";
 
     private static int temp;
 
@@ -50,7 +49,6 @@ public class SEAGA {
         if (lvl>=0 && lvl <=7) { theGame[20]=lvl; return true;}
         return false;
     }
-
     public static boolean ChangeLevel(Level lvl){
         if (lvl==null) return false;
         theGame[20]=lvl.getValue();
@@ -63,8 +61,8 @@ public class SEAGA {
     public static int getWhoWin() {return win;}
     private static void win() {
         if (theGame[0]==2) return;
-        if (aRLine(1,2,3)) {win=0;}
-        else if (aBLine(7,8,9)) {win=1;}
+        if (aRLine(1,2,3)) win=0;
+        else if (aBLine(7,8,9)) win=1;
         else win=2;
     }
 
@@ -102,11 +100,11 @@ public class SEAGA {
 
     //region - save and load
     public static String save(){
-         if (theGame[0]==2) return null;
-        StringBuilder s = new StringBuilder(20);
+        if (theGame[0]==2) return null;
+        StringBuilder s = new StringBuilder();
         for (int i=0; i<20; i++){s.append(theGame[i]).append('/');}
         s.append(theGame[20]);
-         return s.toString();
+        return s.toString();
     }
 
     public static boolean load(String s){
@@ -116,7 +114,7 @@ public class SEAGA {
          try{
              for (int i=0; i<21; i++) theGame[i] = Integer.parseInt(S[i]);
          } catch(Exception ignored){reset(); return false;}
-        fastGameUpdate();
+         fastGameUpdate();
          return true;
     }
     //endregion
@@ -157,8 +155,8 @@ public class SEAGA {
         theGame[0] = theGame[15];
         theGame[10] = 0;
         for(int i=1; i<=9; i++) theGame[i] = i;
-        for(int i=1; i<=3; i++) theGame[10 + i] = 0;
-        for(int i=7; i<=9; i++) theGame[10 + i] = 0;
+        for(int i=11; i<=13; i++) theGame[i] = 0;
+        for(int i=17; i<=19; i++) theGame[i] = 0;
         fastGameUpdate();
         undo.setLength(0); redo.setLength(0);
     }
@@ -432,14 +430,14 @@ public class SEAGA {
     }
 
     private static boolean hLine(int piece1, int piece2, int piece3){
-        for(int i=0; i<=7; i+=3){
+        for(int i=1; i<=7; i+=3){
             if (((theGame[piece1] == i) || (theGame[piece2] == i) || (theGame[piece3] == i)) && ((theGame[piece1] == i + 1) || (theGame[piece2] == i + 1) || (theGame[piece3] == i + 1)) && ((theGame[piece1] == i + 2) || (theGame[piece2] == i + 2) || (theGame[piece3] == i + 2))) return true;
         }
         return false;
     }
 
     private static boolean vLine(int piece1, int piece2, int piece3){
-        for(int i=0; i<=3; i++){
+        for(int i=1; i<=3; i++){
             if (((theGame[piece1] == i) || (theGame[piece2] == i) || (theGame[piece3] == i)) && ((theGame[piece1] == i + 3) || (theGame[piece2] == i + 3) || (theGame[piece3] == i + 3)) && ((theGame[piece1] == i + 6) || (theGame[piece2] == i + 6) || (theGame[piece3] == i + 6))) return true;
         }
         return false;
@@ -447,14 +445,14 @@ public class SEAGA {
 
     /* To distinguish the difference between theGame array and fastGame array
     private static boolean hLine(int loc1, int loc2, int loc3){
-        for(int i=0; i<=7; i+=3){
+        for(int i=1; i<=7; i+=3){
             if (((fastGame[i] == loc1) || (fastGame[i] == loc2) || (fastGame[i] == loc3)) && ((fastGame[i+1] == loc1) || (fastGame[i+1] == loc2) || (fastGame[i+1] == loc3)) && ((fastGame[i+2] == loc1) || (fastGame[i+2] == loc2) || (fastGame[i+2] == loc3))) return true;
         }
         return false;
     }
 
     private static boolean vLine(int loc1, int loc2, int loc3){
-        for(int i=0; i<=3; i++){
+        for(int i=1; i<=3; i++){
             if (((fastGame[i] == loc1) || (fastGame[i] == loc2) || (fastGame[i] == loc3)) && ((fastGame[i+3] == loc1) || (fastGame[i+3] == loc2) || (fastGame[i+3] == loc3)) && ((fastGame[i+6] == loc1) || (fastGame[i+6] == loc2) || (fastGame[i+6] == loc3))) return true;
         }
         return false;
@@ -537,13 +535,23 @@ public class SEAGA {
     }
     //endregion
 
+    public static boolean color = false;
     public static String Board() {
         int tmp;
         StringBuilder s = new StringBuilder();
         for (int i=1; i<=9; i++){
             tmp = fastGame[i];
-            s.append(tmp);
-            if (theGame[10+tmp]==0 && tmp!=4 && tmp!=5 && tmp!=6) s.append('x');
+            if (color && !(tmp==4 || tmp==5 || tmp==6)) {
+                if (tmp==1 || tmp==2 || tmp==3) s.append("[31m").append(tmp).append("[0m");
+                else s.append("[34m").append(tmp).append("[0m");
+            } else s.append(tmp);
+            if (theGame[10+tmp]==0 && tmp!=4 && tmp!=5 && tmp!=6) {
+                if (!color) s.append('x'); else s.append("[35m").append('x').append("[0m");
+            }else if (win==0 && (tmp==1 || tmp==2 || tmp==3)) {
+                if (!color) s.append('!'); else s.append("[32m").append('!').append("[0m");
+            }else if (win==1 && (tmp==7 || tmp==8 || tmp==9)) {
+                if (!color) s.append('$'); else s.append("[32m").append('$').append("[0m");
+            }
             if(i==3 || i==6 || i==9) {s.append("\n");}
             else s.append("\t");
         }
