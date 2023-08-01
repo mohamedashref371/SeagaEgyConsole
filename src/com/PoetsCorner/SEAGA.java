@@ -9,12 +9,12 @@ public class SEAGA {
 
     private static int temp;
 
-    private static final String[] playersName = {"Player1", "Player2"};
-    public static boolean SetPlayer1Name(String s){
+    private static final String[] playersName = {"RedPlayer", "BluePlayer"};
+    public static boolean SetRedPlayerName(String s){
         if (!s.trim().equals("")) {playersName[0] = s; return true;}
         return false;
     }
-    public static boolean SetPlayer2Name(String s){
+    public static boolean SetBluePlayerName(String s){
         if (!s.trim().equals("") && theGame[16]==0) {playersName[1] = s; return true;}
         return false;
     }
@@ -22,19 +22,27 @@ public class SEAGA {
         if(i==0 || i==1) return playersName[i];
         return null;
     }
-    public static String GetPlayer1Name(){return playersName[0];}
-    public static String GetPlayer2Name(){return playersName[1];}
+    public static String GetRedPlayerName(){return playersName[0];}
+    public static String GetBluePlayerName(){return playersName[1];}
+
+    public static int PlayerSteps(int i){
+        if (i==0){return theGame[11]+theGame[12]+theGame[13];}
+        if (i==1){return theGame[17]+theGame[18]+theGame[19];}
+        return -1;
+    }
+    public static int RedPlayerSteps(){return theGame[11]+theGame[12]+theGame[13];}
+    public static int BluePlayerSteps(){return theGame[17]+theGame[18]+theGame[19];}
 
     private static final int[] theGame =
                    {2 /* player role 0 or 1 */,
                     1,2,3,4,5,6,7,8,9, /* The array fields represent the pieces and the numbers represent their locations
-                    [1], [2] and [3] are the pieces of player1
+                    [1], [2] and [3] are the pieces of RedPlayer
                     [4], [5] and [6] are empty boxes
-                    [7], [8] and [9] are the pieces of player2 */
+                    [7], [8] and [9] are the pieces of BluePlayer */
          /* [10] */ 0 /* selected piece */,
                     0,0,0, /* movementOfPieces */
          /* [14] */ 0 /* 0: Vertical and Horizontal only, 1: V & H and Diagonal */,
-         /* [15] */ 2 /* who started playing first, 0: player1, 1: player2 */,
+         /* [15] */ 2 /* who started playing first, 0: RedPlayer, 1: BluePlayer */,
          /* [16] */ 0 /* 0: player vs. player, 1: player vs. computer */,
                     0,0,0, /* movementOfPieces */
          /* [20] */ 4 /* level */ };

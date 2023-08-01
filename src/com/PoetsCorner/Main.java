@@ -7,9 +7,9 @@ public class Main {
     public static void main(String[] args) {
         Scanner x = new Scanner(System.in);
         System.out.println("Hello, SEAGA EGY Console v1.0\n"
-                +"1, 2 and 3 for first player\n"
+                +"1, 2 and 3 for red player\n"
                 +"4, 5 and 6 for spaces\n"
-                +"7, 8 and 9 for second player.\n"
+                +"7, 8 and 9 for blue player.\n"
                 +"Write for playing,   Example: 1-5 to switch between 1 and 5.\n"
                 +"Write 'u' or 'uu' if you want to undo your moves.\n");
         String s,c;
@@ -34,7 +34,7 @@ public class Main {
 
             // choose who play first
             if (playsFirst==PlaysFirst.ByOurselves){
-                System.out.println("write '1' if you want "+GetPlayer2Name()+" to play first");
+                System.out.println("write '1' if you want "+GetBluePlayerName()+" to play first");
                 c = x.next();
                 try{
                     if (Integer.parseInt(c)==1) start(1);
