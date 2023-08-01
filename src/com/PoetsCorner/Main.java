@@ -11,7 +11,8 @@ public class Main {
                 +"4, 5 and 6 for spaces\n"
                 +"7, 8 and 9 for blue player.\n"
                 +"Write for playing,   Example: 1-5 to switch between 1 and 5.\n"
-                +"Write 'u' or 'uu' if you want to undo your moves.\n");
+                +"Write 'u' or 'uu' if you want to undo your moves.\n"
+                +"Write 'color' to enable/disable the color board.\n");
         String s,c;
         System.out.print("Now, ");
         while(playsFirst!= PlaysFirst.CloseTheGame){
