@@ -10,6 +10,11 @@ public class SEAGA {
     private static int temp;
 
     private static final String[] playersName = {"RedPlayer", "BluePlayer"};
+
+    public static boolean SetPlayerName(int i, String s){
+        if (i!=0 && i!=1 || s.trim().equals("")) return false;
+        playersName[i] = s; return true;
+    }
     public static boolean SetRedPlayerName(String s){
         if (!s.trim().equals("")) {playersName[0] = s; return true;}
         return false;
@@ -18,6 +23,7 @@ public class SEAGA {
         if (!s.trim().equals("") && theGame[16]==0) {playersName[1] = s; return true;}
         return false;
     }
+
     public static String GetPlayerName(int i){
         if(i==0 || i==1) return playersName[i];
         return null;
