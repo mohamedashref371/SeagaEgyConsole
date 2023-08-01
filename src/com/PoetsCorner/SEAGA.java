@@ -12,15 +12,15 @@ public class SEAGA {
     private static final String[] playersName = {"RedPlayer", "BluePlayer"};
 
     public static boolean SetPlayerName(int i, String s){
-        if (i!=0 && i!=1 || s.trim().equals("")) return false;
+        if (i!=0 && i!=1 || s==null || s.trim().equals("")) return false;
         playersName[i] = s; return true;
     }
     public static boolean SetRedPlayerName(String s){
-        if (!s.trim().equals("")) {playersName[0] = s; return true;}
+        if (s!=null && !s.trim().equals("")) {playersName[0] = s; return true;}
         return false;
     }
     public static boolean SetBluePlayerName(String s){
-        if (!s.trim().equals("") && theGame[16]==0) {playersName[1] = s; return true;}
+        if (s!=null && !s.trim().equals("") && theGame[16]==0) {playersName[1] = s; return true;}
         return false;
     }
 
