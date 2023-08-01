@@ -613,14 +613,14 @@ public class SEAGA {
 
     public enum Color {
         RESET("[0m"),
-        BLACK("[0;30m"),
-        RED("[0;31m"),
-        GREEN("[0;32m"),
-        YELLOW("[0;33m"),
-        BLUE("[0;34m"),
-        MAGENTA("[0;35m"),
-        CYAN("[0;36m"),
-        WHITE("[0;37m");
+        BLACK("[30m"),
+        RED("[31m"),
+        GREEN("[32m"),
+        YELLOW("[33m"),
+        BLUE("[34m"),
+        MAGENTA("[35m"),
+        CYAN("[36m"),
+        WHITE("[37m");
 
         private final String code;
         Color(String code) {this.code = code;}
