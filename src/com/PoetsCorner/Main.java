@@ -71,7 +71,9 @@ public class Main {
             stop();
             playsFirst=PlaysFirst.CloseTheGame;
         }
-        System.out.println("see you later. Do not forget to pray for the Messenger of Allah, our master Muhammad.");
+        System.out.println("\nsee you later. Do not forget to pray for the Messenger of Allah, our master Muhammad.");
+        System.out.println("This game developed by " + color("Mohamed Ashref Sayed", Color.GREEN));
+        System.out.println(color("https://facebook.com/Mohamed3713317", Color.BLUE));
     }
 
     static Scanner xLine = new Scanner(System.in);

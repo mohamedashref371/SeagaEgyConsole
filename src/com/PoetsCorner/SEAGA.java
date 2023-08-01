@@ -550,22 +550,32 @@ public class SEAGA {
     //endregion
 
     public static boolean color = false;
+    public static String color(String s, Color c){
+        if (c==null || !color || s==null) return s;
+        return c.code + s + Color.RESET;
+    }
+    public static String color(int i, Color c){
+        String s = i+"";
+        if (c==null || !color) return s;
+        return c.code + s + Color.RESET;
+    }
+
+    private static StringBuilder s = new StringBuilder();
     public static String Board() {
+        s.setLength(0);
         int tmp;
-        StringBuilder s = new StringBuilder();
         for (int i=1; i<=9; i++){
             tmp = fastGame[i];
-            if (color && !(tmp==4 || tmp==5 || tmp==6)) {
-                if (tmp==1 || tmp==2 || tmp==3) s.append("[31m").append(tmp).append("[0m");
-                else s.append("[34m").append(tmp).append("[0m");
-            } else s.append(tmp);
-            if (theGame[10+tmp]==0 && tmp!=4 && tmp!=5 && tmp!=6) {
-                if (!color) s.append('x'); else s.append("[35m").append('x').append("[0m");
-            }else if (win==0 && (tmp==1 || tmp==2 || tmp==3)) {
-                if (!color) s.append('!'); else s.append("[33m").append('$').append("[0m");
-            }else if (win==1 && (tmp==7 || tmp==8 || tmp==9)) {
-                if (!color) s.append('$'); else s.append("[32m").append('$').append("[0m");
-            }
+
+            if (tmp==1 || tmp==2 || tmp==3) s.append(color(tmp, Color.RED));
+            else if (tmp==7 || tmp==8 || tmp==9) s.append(color(tmp, Color.BLUE));
+            else s.append(tmp);
+
+            if ((tmp==1 || tmp==2 || tmp==3) && theGame[10+tmp]==0) s.append(color("x",Color.MAGENTA));
+            else if ((tmp==7 || tmp==8 || tmp==9) && theGame[10+tmp]==0) s.append(color("x",Color.CYAN));
+            else if (win==0 && (tmp==1 || tmp==2 || tmp==3)) s.append(color("$",Color.YELLOW));
+            else if (win==1 && (tmp==7 || tmp==8 || tmp==9)) s.append(color("$",Color.GREEN));
+
             if(i==3 || i==6 || i==9) {s.append("\n");}
             else s.append("\t");
         }
@@ -599,5 +609,23 @@ public class SEAGA {
         private final int value;
         PlaysFirst(int value) {this.value = value;}
         public int getValue() {return value;}
+    }
+
+    public enum Color {
+        RESET("[0m"),
+        BLACK("[0;30m"),
+        RED("[0;31m"),
+        GREEN("[0;32m"),
+        YELLOW("[0;33m"),
+        BLUE("[0;34m"),
+        MAGENTA("[0;35m"),
+        CYAN("[0;36m"),
+        WHITE("[0;37m");
+
+        private final String code;
+        Color(String code) {this.code = code;}
+
+        @Override
+        public String toString() {return code;}
     }
 }
