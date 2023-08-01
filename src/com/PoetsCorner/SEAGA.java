@@ -5,7 +5,7 @@ import static com.PoetsCorner.SEAGA.PlaysFirst.*;
 
 public class SEAGA {
 
-    public static final String version = "2023.07.28";
+    public static final String version = "2023.08.01";
 
     private static int temp;
 
