@@ -229,7 +229,7 @@ public class SEAGA {
             theGame[16]=1; playersName[1]="Computer";
             if (theGame[0]==1 && !pauseComputer) ComputerIntelligence();
         }
-        else {theGame[16]=0; playersName[1]="Player2";}
+        else {theGame[16]=0; playersName[1]="BluePlayer";}
     }
 
     private static boolean functions(int f, String block) {
