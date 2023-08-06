@@ -1,15 +1,17 @@
 package com.PoetsCorner;
 
 import java.util.Random;
+
+import static com.PoetsCorner.SEAGA.Color.*;
 import static com.PoetsCorner.SEAGA.PlaysFirst.*;
 
 public class SEAGA {
 
-    public static final String version = "2023.08.01";
+    public static final String version = "2023.08.06";
 
     private static int temp;
 
-    private static final String[] playersName = {"RedPlayer", "BluePlayer"};
+    private static final String[] playersName = {color("Red",RED)+"Player", color("Blue",BLUE)+"Player"};
 
     public static boolean SetPlayerName(int i, String s){
         if (i!=0 && i!=1 || s==null || s.trim().equals("")) return false;
@@ -39,6 +41,9 @@ public class SEAGA {
     public static int RedPlayerSteps(){return theGame[11]+theGame[12]+theGame[13];}
     public static int BluePlayerSteps(){return theGame[17]+theGame[18]+theGame[19];}
 
+    public static void Diagonal() {theGame[14]= 1- theGame[14];}
+    public static void Diagonal(boolean enable){if (enable) theGame[14]=1; else theGame[14]=0;}
+
     private static final int[] theGame =
                    {2 /* player role 0 or 1 */,
                     1,2,3,4,5,6,7,8,9, /* The array fields represent the pieces and the numbers represent their locations
@@ -46,11 +51,11 @@ public class SEAGA {
                     [4], [5] and [6] are empty boxes
                     [7], [8] and [9] are the pieces of BluePlayer */
          /* [10] */ 0 /* selected piece */,
-                    0,0,0, /* movementOfPieces */
+                    0,0,0, /* movement of RedPlayer pieces */
          /* [14] */ 0 /* 0: Vertical and Horizontal only, 1: V & H and Diagonal */,
          /* [15] */ 2 /* who started playing first, 0: RedPlayer, 1: BluePlayer */,
          /* [16] */ 0 /* 0: player vs. player, 1: player vs. computer */,
-                    0,0,0, /* movementOfPieces */
+                    0,0,0, /* movement of BluePlayer pieces */
          /* [20] */ 4 /* level */ };
     private static final int[] fastGame = {0/* never used */, 1,2,3,4,5,6,7,8,9}; /* The array fields represent the locations of the pieces, and the numbers represent the pieces */
 
@@ -178,18 +183,34 @@ public class SEAGA {
     public static void stop() { theGame[0]=2;}
     //endregion
 
+    static int boxes(String s) {
+        if (s.equals("q")) return fastGame[1];
+        else if (s.equals("w")) return fastGame[2];
+        else if (s.equals("e")) return fastGame[3];
+        else if (s.equals("a")) return fastGame[4];
+        else if (s.equals("s")) return fastGame[5];
+        else if (s.equals("d")) return fastGame[6];
+        else if (s.equals("z")) return fastGame[7];
+        else if (s.equals("x")) return fastGame[8];
+        else if (s.equals("c")) return fastGame[9];
+        return 0;
+    }
 
     public static boolean input(String s) {
         s=s.trim();
-        int x, y;
-        try{x = Integer.parseInt(s.substring(0,1));} catch (Exception ex) { return false;}
-        try{y = Integer.parseInt(s.substring(s.length()-1));} catch (Exception ex) { return false;}
+        int x=0, y=0;
+        try{x = Integer.parseInt(s.substring(0,1));} catch (Exception ignored) {}
+        try{y = Integer.parseInt(s.substring(s.length()-1));} catch (Exception ignored) {}
+        if (x==0 || y==0) {
+            x=boxes(s.substring(0,1));
+            y=boxes(s.substring(s.length()-1));
+        }
         if (x==4 || x==5 || x==6) { select(y); return select(x);}
         else if (y==4 || y==5 || y==6) { select(x); return select(y);}
         return false;
     }
 
-    private static boolean select(int i){
+    static boolean select(int i){
         if (theGame[0]==0 && (i==1 || i==2 || i==3) || theGame[0]==1 && (i==7 || i==8 || i==9) && theGame[16]==0) theGame[10]=i;
         else if (theGame[10]>0 && (i==4 || i==5 || i==6)) {
             moving(i,theGame[10],true);
@@ -229,7 +250,7 @@ public class SEAGA {
             theGame[16]=1; playersName[1]="Computer";
             if (theGame[0]==1 && !pauseComputer) ComputerIntelligence();
         }
-        else {theGame[16]=0; playersName[1]="BluePlayer";}
+        else {theGame[16]=0; playersName[1]=color("Blue",BLUE)+"Player";}
     }
 
     private static boolean functions(int f, String block) {
@@ -549,7 +570,12 @@ public class SEAGA {
     }
     //endregion
 
-    public static boolean color = false;
+    private static boolean color = false;
+    public static void color(){
+        color = !color;
+        if (playersName[0].equals("RedPlayer") || playersName[0].equals(RED+"Red"+RESET+"Player")) playersName[0]= color("Red",RED)+"Player";
+        if (playersName[1].equals("BluePlayer") || playersName[1].equals(BLUE+"Blue"+RESET+"Player")) playersName[1]= color("Blue",BLUE)+"Player";
+    }
     public static String color(String s, Color c){
         if (c==null || !color || s==null) return s;
         return c.code + s + Color.RESET;
@@ -560,21 +586,21 @@ public class SEAGA {
         return c.code + s + Color.RESET;
     }
 
-    private static StringBuilder s = new StringBuilder();
+    private static final StringBuilder s = new StringBuilder();
     public static String Board() {
         s.setLength(0);
         int tmp;
         for (int i=1; i<=9; i++){
             tmp = fastGame[i];
 
-            if (tmp==1 || tmp==2 || tmp==3) s.append(color(tmp, Color.RED));
-            else if (tmp==7 || tmp==8 || tmp==9) s.append(color(tmp, Color.BLUE));
+            if (tmp==1 || tmp==2 || tmp==3) s.append(color(tmp, RED));
+            else if (tmp==7 || tmp==8 || tmp==9) s.append(color(tmp, BLUE));
             else s.append(tmp);
 
-            if ((tmp==1 || tmp==2 || tmp==3) && theGame[10+tmp]==0) s.append(color("x",Color.MAGENTA));
-            else if ((tmp==7 || tmp==8 || tmp==9) && theGame[10+tmp]==0) s.append(color("x",Color.CYAN));
-            else if (win==0 && (tmp==1 || tmp==2 || tmp==3)) s.append(color("$",Color.YELLOW));
-            else if (win==1 && (tmp==7 || tmp==8 || tmp==9)) s.append(color("$",Color.GREEN));
+            if ((tmp==1 || tmp==2 || tmp==3) && theGame[10+tmp]==0) s.append(color("x", MAGENTA));
+            else if ((tmp==7 || tmp==8 || tmp==9) && theGame[10+tmp]==0) s.append(color("x", CYAN));
+            else if (win==0 && (tmp==1 || tmp==2 || tmp==3)) s.append(color("$", YELLOW));
+            else if (win==1 && (tmp==7 || tmp==8 || tmp==9)) s.append(color("$", GREEN));
 
             if(i==3 || i==6 || i==9) {s.append("\n");}
             else s.append("\t");

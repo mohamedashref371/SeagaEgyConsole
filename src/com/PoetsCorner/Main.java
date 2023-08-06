@@ -11,6 +11,7 @@ public class Main {
                 +"4, 5 and 6 for spaces\n"
                 +"7, 8 and 9 for blue player.\n"
                 +"Write for playing,   Example: 1-5 to switch between 1 and 5.\n"
+                +"You can using q,w,e,a,s,d,z,x,c for playing with locations.\n"
                 +"Write 'u' or 'uu' if you want to undo your moves.\n"
                 +"Write 'color' to enable/disable the color board.\n");
         String s,c;
@@ -54,7 +55,8 @@ public class Main {
                 c = nextLine();
                 if (c.equals("u")) undo();
                 else if (c.equals("uu")) {undo(); undo();}
-                else if (c.equals("color")) color = !color;
+                else if (c.equals("d")) Diagonal();
+                else if (c.equals("color")) color();
                 else if (playerRole()==1 && s!=null){
                     resumeComputer(); pauseComputer();
                     System.out.println(computerStep);
@@ -69,11 +71,15 @@ public class Main {
                 }
             }
             stop();
-            playsFirst=PlaysFirst.CloseTheGame;
+
+            System.out.println("Are you want to play another game ?! Y/N");
+            if (!nextLine().equals("y")) playsFirst=PlaysFirst.CloseTheGame;
         }
-        System.out.println("\nsee you later. Do not forget to pray for the Messenger of Allah, our master Muhammad.");
+        System.out.println("\nsee you later. Do not forget to pray for the Messenger of Allah, our master Muhammad.\n");
         System.out.println("This game developed by " + color("Mohamed Ashref Sayed", Color.GREEN));
         System.out.println(color("https://facebook.com/Mohamed3713317", Color.BLUE));
+        System.out.println("\nTo download the windows version: \n"+color("https://www.mediafire.com/file/0wv97m4n96q5y0v", Color.BLUE));
+        nextLine();
     }
 
     static Scanner xLine = new Scanner(System.in);
