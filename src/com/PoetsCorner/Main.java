@@ -13,6 +13,7 @@ public class Main {
                 +"Write for playing,   Example: 1-5 to switch between 1 and 5.\n"
                 +"You can using q,w,e,a,s,d,z,x,c for playing with locations.\n"
                 +"Write 'u' or 'uu' if you want to undo your moves.\n"
+                +"Write d to enable/disable the playing with Diagonal.\n"
                 +"Write 'color' to enable/disable the color board.\n");
         String s,c;
         System.out.print("Now, ");
@@ -72,7 +73,7 @@ public class Main {
             }
             stop();
 
-            System.out.println("Are you want to play another game ?! Y/N");
+            System.out.println("Do you want to play another game ?! Y/N");
             if (!nextLine().equals("y")) playsFirst=PlaysFirst.CloseTheGame;
         }
         System.out.println("\nsee you later. Do not forget to pray for the Messenger of Allah, our master Muhammad.\n");
