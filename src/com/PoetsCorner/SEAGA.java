@@ -200,6 +200,7 @@ public class SEAGA {
     public static boolean input(String s) {
         s=s.trim();
         int x=0, y=0;
+        if (s.length()<2) return false;
         try{x = Integer.parseInt(s.substring(0,1));} catch (Exception ignored) {}
         try{y = Integer.parseInt(s.substring(s.length()-1));} catch (Exception ignored) {}
         if (x==0 || y==0) {
