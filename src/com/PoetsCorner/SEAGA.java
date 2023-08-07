@@ -173,6 +173,7 @@ public class SEAGA {
     public static void reset() {
         theGame[0] = theGame[15];
         theGame[10] = 0;
+        win=2;
         for(int i=1; i<=9; i++) theGame[i] = i;
         for(int i=11; i<=13; i++) theGame[i] = 0;
         for(int i=17; i<=19; i++) theGame[i] = 0;
