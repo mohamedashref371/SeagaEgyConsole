@@ -7,7 +7,7 @@ import static com.PoetsCorner.SEAGA.PlaysFirst.*;
 
 public class SEAGA {
 
-    public static final String version = "2023.08.06";
+    public static final String version = "2023.08.12";
 
     private static int temp;
 
@@ -61,6 +61,11 @@ public class SEAGA {
 
     static int PieceLocation(int piece) {return theGame[piece];} // return the box of piece.
     static int PieceInBox(int box) {return fastGame[box];} // select the box and return the piece.
+
+    static boolean isSleep(int piece) {
+        if (piece >=1 && piece <=9 && piece!=4 && piece!=5 && piece!=6) return theGame[10+piece]==0;
+        return false;
+    }
 
     private static final Level[] lvl = Level.values();
     public static String getLevel(){return lvl[theGame[20]].name();}
@@ -311,7 +316,7 @@ public class SEAGA {
 
     private static void Choosing(String[] game, int l){
         int num = new Random().nextInt(l);
-        computerStep = game[num].charAt(0) + " -> " + game[num].charAt(1);
+        computerStep = game[num].charAt(1) + " -> " + game[num].charAt(0);
         theGame[10] = Integer.parseInt(game[num].substring(1));
         select(Integer.parseInt(game[num].substring(0,1)));
     }
